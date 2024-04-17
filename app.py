@@ -1,6 +1,6 @@
 """Blogly application."""
 
-from flask import Flask
+from flask import Flask, render_template
 from models import db, connect_db
 import os
 from dotenv import load_dotenv
@@ -18,4 +18,4 @@ with app.app_context():
 
 @app.get('/')
 def index():
-    return "<h1>Hello world!</h1>"
+    return render_template('index.html', title='Index')
