@@ -1,0 +1,20 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+Title: New User Form
+<h1>Create a user</h1>
+<form>
+    <div>
+        <label for="first_name">First Name</label>
+        <input id="first_name" placeholder="First Name" />
+    </div>
+    <div>
+        <label for="last_name">Last Name</label>
+        <input id="last_name" placeholder="Last Name" />
+    </div>
+    <div>
+        <label for="image_url">Image URL</label>
+        <input id="image_url" placeholder="Image URL" />
+    </div>
+    <button class='btn btn-success'>Add</button>
+</form>
+{% endblock %}
