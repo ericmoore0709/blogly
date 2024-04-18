@@ -16,3 +16,9 @@ class User(db.Model):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.String(250), nullable=False)
+
+    def __repr__(self) -> str:
+        return f'User(id="{self.id}", first_name="{self.first_name}", last_name="{self.last_name}", image_url="{self.image_url}")'
+    
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'

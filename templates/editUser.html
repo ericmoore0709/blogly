@@ -1,20 +1,17 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h1>Edit a user</h1>
-<form>
-    <div>
-        <label for="first_name">First Name</label>
-        <input id="first_name" placeholder="First Name" value={{user.first_name}} />
+<h1>Edit a User</h1>
+<form class="bg-secondary-subtle my-4 py-5 px-0 w-50 mx-auto" action={{'/users/' + user.id | string + '/edit' }}
+    method="post">
+    <div class="mb-3 w-50 mx-auto">
+        <input class="form-control" name="first_name" placeholder="First Name" value={{user.first_name}} />
     </div>
-    <div>
-        <label for="last_name">Last Name</label>
-        <input id="last_name" placeholder="Last Name" value={{user.last_name}} />
+    <div class="mb-3 w-50 mx-auto">
+        <input class="form-control" name="last_name" placeholder="Last Name" value={{user.last_name}} />
     </div>
-    <div>
-        <label for="image_url">Image URL</label>
-        <input id="image_url" placeholder="Image URL" value={{user.image_url}} />
+    <div class="mb-3 w-50 mx-auto">
+        <input class="form-control" name="image_url" placeholder="Image URL" value={{user.image_url}} />
     </div>
-    <button class='btn-link link-info'>Cancel</button>
-    <button class='btn btn-success'>Save</button>
+    <button class='btn btn-success'>Edit</button>
 </form>
 {% endblock %}

@@ -1,10 +1,15 @@
 {% extends 'layout/base.html' %}
 {% block content %}
 <h1>Users</h1>
-<ul>
+{% if users %}
+<p>{{users | length}} user(s).</p>
+<ul class="list-group w-50 mx-auto">
     {% for user in users %}
-    <li><a>user.full_name</a></li>
+    <li class="list-group-item border-0"><a href={{'/users/' + user.id | string}}>{{user.full_name()}}</a></li>
     {% endfor %}
 </ul>
-<button class="btn btn-secondary">Add User</button>
+{% else %}
+<p>No users.</p>
+{% endif %}
+<a href="/users/new" class="btn btn-secondary mt-3">Add User</a>
 {% endblock %}
