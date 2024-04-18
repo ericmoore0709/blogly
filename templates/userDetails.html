@@ -1,13 +1,25 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<div>
-    <img class="img-thumbnail" src={{user.image_url}}>
-    <h1>{{user.full_name()}}</h1>
-    <form action={{'/users/' + user.id | string + '/delete' }} method="post">
-        <input type="hidden" value={{user.id}} />
-        <a href={{'/users/' + user.id | string + '/edit' }} class="btn btn-primary">Edit</a>
-        <button id="delete_button" class="btn btn-danger">Delete</button>
-    </form>
+<div class="container w-50 mx-auto">
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-6">
+                <img class="img-thumbnail" src={{user.image_url}}>
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <h5 class="card-title">{{user.full_name()}}</h5>
+                    <form class="mb-0" action={{'/users/' + user.id | string + '/delete' }} method="post">
+                        <input type="hidden" value={{user.id}} />
+                        <a href={{'/users/' + user.id | string + '/edit' }} class="btn btn-primary">Edit</a>
+                        <button id="delete_button" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 {% endblock %}
