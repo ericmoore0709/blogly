@@ -3,18 +3,18 @@
 <div class="container w-50 mx-auto">
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
-            <div class="col-md-6">
-                <div class="card-body">
-                    <h5 class="card-title">{{post.title}}</h5>
-                    <article>{{post.content}}</article>
-                    <aside>By {{post.author.full_name()}}</aside>
-                    <form class="mb-0" action={{'/posts/' + post.id | string + '/delete' }} method="post">
-                        <input type="hidden" value={{user.id}} />
-                        <a href={{'/posts/' + user.id | string + '/' }} class="btn-link link-info">Cancel</a>
-                        <a href={{'/posts/' + user.id | string + '/edit' }} class="btn btn-primary">Edit</a>
-                        <button id="delete_button" class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
+            <div class="card-body">
+                <h5 class="card-title">{{post.title}}</h5>
+                <article>{{post.content}}</article>
+
+                <p><small>By {{author.full_name()}}</small></p>
+
+                <form class="mb-0" action={{'/posts/' + post.id | string + '/delete' }} method="post">
+                    <input type="hidden" value={{author.id}} />
+                    <a href={{'/users/' + post.user_id | string }} class="btn-link link-info mx-2">Cancel</a>
+                    <a href={{'/posts/' + post.id | string + '/edit' }} class="btn btn-primary mx-2">Edit</a>
+                    <button id="delete_button" class="btn btn-danger mx-2">Delete</button>
+                </form>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-<h1>Create a Post</h1>
-<form class="bg-secondary-subtle my-4 py-5 px-0 w-50 mx-auto" action={{ 'posts/' + post.id | string + '/edit' }}
+<h1>Edit a Post</h1>
+<form class="bg-secondary-subtle my-4 py-5 px-0 w-50 mx-auto" action={{ '/posts/' + post.id | string + '/edit' }}
     method="post">
     <div class="mb-3 w-50 mx-auto">
         <input class="form-control" name="title" placeholder="Title" value={{post.title}} />

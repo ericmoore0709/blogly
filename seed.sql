@@ -1,5 +1,7 @@
+-- Drop the tables entirely.
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS users;
+-- Create the tables
 CREATE TABLE users (
     id SERIAL NOT NULL,
     first_name VARCHAR NOT NULL,
@@ -16,6 +18,7 @@ CREATE TABLE posts (
     PRIMARY KEY (id),
     FOREIGN KEY(user_id) REFERENCES users (id)
 );
+-- Add dummy data to users table
 INSERT INTO users (id, first_name, last_name, image_url)
 VALUES (
         1,
@@ -86,6 +89,7 @@ VALUES (
         'Fahrenbacher',
         'http://dummyimage.com/188x100.png/dddddd/000000'
     );
+-- Add dummy data to posts table
 INSERT INTO posts (id, title, content, created_at, user_id)
 VALUES (
         1,
@@ -295,4 +299,20 @@ VALUES (
 Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.',
         '10/5/2023',
         1
+    );
+-- update users table id primary key start
+SELECT setval(
+        'users_id_seq',
+        (
+            SELECT MAX(id)
+            FROM users
+        ) + 1
+    );
+-- update posts table id primary key start
+SELECT setval(
+        'posts_id_seq',
+        (
+            SELECT MAX(id)
+            FROM posts
+        ) + 1
     );
