@@ -14,9 +14,9 @@ CREATE TABLE posts (
     title VARCHAR NOT NULL,
     content VARCHAR NOT NULL,
     created_at DATE NOT NULL,
-    user_id INTEGER,
+    author_id INTEGER,
     PRIMARY KEY (id),
-    FOREIGN KEY(user_id) REFERENCES users (id)
+    FOREIGN KEY(author_id) REFERENCES users (id)
 );
 -- Add dummy data to users table
 INSERT INTO users (id, first_name, last_name, image_url)
@@ -90,7 +90,7 @@ VALUES (
         'http://dummyimage.com/188x100.png/dddddd/000000'
     );
 -- Add dummy data to posts table
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         1,
         'vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere',
@@ -102,7 +102,7 @@ Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan fe
         '8/14/2023',
         4
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         2,
         'rutrum neque aenean auctor gravida sem praesent id massa id nisl',
@@ -110,7 +110,7 @@ VALUES (
         '7/18/2023',
         7
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         3,
         'nulla dapibus dolor vel est donec odio justo sollicitudin ut suscipit a feugiat et eros vestibulum ac',
@@ -122,7 +122,7 @@ Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet 
         '9/6/2023',
         9
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         4,
         'eget eros elementum pellentesque quisque porta volutpat erat quisque erat eros viverra',
@@ -134,7 +134,7 @@ In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultric
         '3/28/2024',
         5
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         5,
         'convallis tortor risus dapibus augue vel accumsan tellus nisi eu orci mauris lacinia sapien quis',
@@ -146,7 +146,7 @@ Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque
         '9/5/2023',
         10
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         6,
         'primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae quam',
@@ -158,7 +158,7 @@ Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspend
         '1/3/2024',
         7
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         7,
         'venenatis lacinia aenean sit amet justo morbi ut odio cras mi pede malesuada in imperdiet et commodo vulputate justo',
@@ -166,7 +166,7 @@ VALUES (
         '5/29/2023',
         7
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         8,
         'gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi',
@@ -174,7 +174,7 @@ VALUES (
         '5/13/2023',
         10
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         9,
         'sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum',
@@ -186,7 +186,7 @@ Nullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non m
         '8/8/2023',
         9
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         10,
         'orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices erat',
@@ -194,7 +194,7 @@ VALUES (
         '4/20/2024',
         4
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         11,
         'urna pretium nisl ut volutpat sapien arcu sed augue aliquam erat volutpat',
@@ -206,7 +206,7 @@ Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare
         '6/12/2023',
         5
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         12,
         'est congue elementum in hac habitasse platea dictumst morbi vestibulum velit id',
@@ -216,7 +216,7 @@ Phasellus in felis. Donec semper sapien a libero. Nam dui.',
         '10/17/2023',
         3
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         13,
         'dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus',
@@ -228,7 +228,7 @@ Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit u
         '4/15/2024',
         7
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         14,
         'vivamus in felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod',
@@ -238,7 +238,7 @@ Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed 
         '4/25/2023',
         5
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         15,
         'felis eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor',
@@ -248,7 +248,7 @@ Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet 
         '5/8/2023',
         8
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         16,
         'natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis',
@@ -258,7 +258,7 @@ Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odi
         '6/19/2023',
         5
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         17,
         'eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien a libero',
@@ -270,7 +270,7 @@ Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue 
         '5/23/2023',
         5
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         18,
         'phasellus id sapien in sapien iaculis congue vivamus metus arcu',
@@ -282,7 +282,7 @@ Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luc
         '9/11/2023',
         1
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         19,
         'pulvinar sed nisl nunc rhoncus dui vel sem sed sagittis nam congue risus',
@@ -290,7 +290,7 @@ VALUES (
         '12/20/2023',
         4
     );
-INSERT INTO posts (id, title, content, created_at, user_id)
+INSERT INTO posts (id, title, content, created_at, author_id)
 VALUES (
         20,
         'ultrices libero non mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit',

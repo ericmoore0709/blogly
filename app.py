@@ -140,8 +140,8 @@ def displayNewPostForm(user_id: int):
     return render_template('newPost.html', title="New Post", user=user, post={})
 
 
-@app.post('/users/<int:users_id>/posts/new')
-def processNewPostForm(users_id: int):
+@app.post('/users/<int:user_id>/posts/new')
+def processNewPostForm(user_id: int):
     """Handle add form; add post and redirect to the user detail page."""
 
     # title, content
@@ -159,21 +159,20 @@ def processNewPostForm(users_id: int):
         return render_template('newPost.html', post={}, title='Add Post', errors=validation_errors)
 
     # create post with data
-    post = Post(title=form_title, content=form_content, user_id=users_id)
+    post = Post(title=form_title, content=form_content, author_id=user_id)
 
     db.session.add(post)
     db.session.commit()
 
     # redirect
-    return redirect('/users/' + str(users_id))
+    return redirect('/users/' + str(user_id))
 
 
 @app.get('/posts/<int:post_id>')
 def getPostInfo(post_id: int):
     """Show a post. Show buttons to edit and delete the post."""
     post: Post = Post.query.get(post_id)
-    author: User = User.query.get(post.user_id)
-    return render_template('postDetails.html', post=post, author=author)
+    return render_template('postDetails.html', post=post)
 
 
 @app.get('/posts/<int:post_id>/edit')
@@ -211,7 +210,7 @@ def processEditPostForm(post_id: int):
     db.session.commit()
 
     # redirect
-    return redirect('/users/' + str(post.user_id))
+    return redirect('/users/' + str(post.author_id))
 
 
 @app.post('/posts/<int:post_id>/delete')
@@ -225,4 +224,4 @@ def processDeletePost(post_id: int):
     db.session.delete(post)
     db.session.commit()
 
-    return redirect('/users/' + str(post.user_id))
+    return redirect('/users/' + str(post.author_id))

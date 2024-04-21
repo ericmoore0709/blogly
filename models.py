@@ -38,6 +38,6 @@ class Post(db.Model):
     title = db.Column(db.String(), nullable=False)
     content = db.Column(db.String(), nullable=False)
     created_at = db.Column(db.Date(), nullable=False, default=datetime.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    user = db.relationship('User', backref='posts')
+    author = db.relationship('User', backref='posts')
