@@ -9,7 +9,6 @@
             <div class="col-md-6">
                 <div class="card-body">
                     <h5 class="card-title">{{user.full_name()}}</h5>
-
                     <form class="mb-0" action={{'/users/' + user.id | string + '/delete' }} method="post">
                         <input type="hidden" value={{user.id}} />
                         <a href={{'/users/' + user.id | string + '/edit' }} class="btn btn-primary">Edit</a>
