@@ -1,3 +1,9 @@
+# Flask Virtual Environment and Py Cache.
 /venv/
 /__pycache__/
+
+# Environment Variables list
 .env
+
+# Batch files I (@ericmoore0709) use for seeding and quick-connecting to database.
+*.bat
