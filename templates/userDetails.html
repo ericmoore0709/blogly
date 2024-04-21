@@ -9,12 +9,26 @@
             <div class="col-md-6">
                 <div class="card-body">
                     <h5 class="card-title">{{user.full_name()}}</h5>
+
                     <form class="mb-0" action={{'/users/' + user.id | string + '/delete' }} method="post">
                         <input type="hidden" value={{user.id}} />
                         <a href={{'/users/' + user.id | string + '/edit' }} class="btn btn-primary">Edit</a>
                         <button id="delete_button" class="btn btn-danger">Delete</button>
                     </form>
                 </div>
+            </div>
+            <div class="mt-2 border-top border-bottom">
+                <h6 class="bg-info-subtle">Posts</h6>
+                {% if user.posts %}
+                <ul class="list-group">
+                    {% for post in user.posts %}
+                    <li class="list-group-item"><a href="#">{{post.title}}</a></li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No posts yet!</p>
+                {% endif %}
+                <a class="btn btn-primary my-2" href="#">Add Post!</a>
             </div>
         </div>
     </div>
