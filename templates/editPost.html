@@ -1,0 +1,16 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<h1>Create a Post</h1>
+<form class="bg-secondary-subtle my-4 py-5 px-0 w-50 mx-auto" action={{ 'posts/' + post.id | string + '/edit' }}
+    method="post">
+    <div class="mb-3 w-50 mx-auto">
+        <input class="form-control" name="title" placeholder="Title" value={{post.title}} />
+    </div>
+    <div class="mb-3 w-50 mx-auto">
+        <textarea class="form-control" name="content" rows="30" cols="50"
+            placeholder="Content">{{post.content}}</textarea>
+    </div>
+    <a href={{ '/posts/' + post.id | string }} class='btn-link link-info'>Cancel</a>
+    <button class='btn btn-success'>Edit</button>
+</form>
+{% endblock %}
