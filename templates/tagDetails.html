@@ -1,0 +1,22 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<div class="container w-50 mx-auto">
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="card-body">
+                <h5 class="card-title">{{tag.name}}</h5>
+                <ul class="list-group w-50 mx-auto">
+                    {% for post in tag.posts %}
+                    <li class="list-group-item border-0"><a href={{'/posts/' + post.id | string}}>{{post.title}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <form class="mb-0" action={{'/tags/' + tag.id | string + '/delete' }} method="post">
+                    <a href={{'/tags/' + tag.id | string + '/edit' }} class="btn btn-primary mx-2">Edit</a>
+                    <button id="delete_button" class="btn btn-danger mx-2">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

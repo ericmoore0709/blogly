@@ -1,0 +1,15 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<h1>Tags</h1>
+{% if tags %}
+<p>{{tags | length}} tag(s).</p>
+<ul class="list-group w-50 mx-auto">
+    {% for tag in tags %}
+    <li class="list-group-item border-0"><a href={{'/tags/' + tag.id | string}}>{{tag.name}}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No tags.</p>
+{% endif %}
+<a href="/tags/new" class="btn btn-secondary mt-3">Add Tag</a>
+{% endblock %}

@@ -9,6 +9,15 @@
     <div class="mb-3 w-50 mx-auto">
         <textarea class="form-control" name="content" rows="30" cols="50"></textarea>
     </div>
+    <div class="d-flex flex-column mb-3 w-50 mx-auto">
+        <span class="text-end me-5"><strong>Tags</strong></span>
+        {% for tag in tags %}
+        <div class="d-flex">
+            <label class="mx-2 col text-end" for={{tag.name}}>{{tag.name}}</label>
+            <input class="mx-2 col-1" type="checkbox" name='tags' value={{tag.id}} id={{tag.name}} />
+        </div>
+        {% endfor %}
+    </div>
     <input type="hidden" name="user_id" value={{user.id}}>
     <a href={{'users/' + user.id | string }} class='btn btn-info'>Cancel</a>
     <button class='btn btn-success'>Add</button>

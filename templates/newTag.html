@@ -1,0 +1,11 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<h1>Create a Tag</h1>
+<form class="bg-secondary-subtle my-4 py-5 px-0 w-50 mx-auto" action='/tags/new' method="post">
+    <div class="mb-3 w-50 mx-auto">
+        <input class="form-control" name="name" placeholder="Name" />
+    </div>
+    <a href='/tags' class='btn btn-info'>Cancel</a>
+    <button class='btn btn-success'>Add</button>
+</form>
+{% endblock %}

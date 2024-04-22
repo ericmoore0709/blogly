@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, render_template, redirect, request
-from models import User, db, connect_db, Post
+from models import User, db, connect_db, Post, Tag, PostTag
 import os
 from dotenv import load_dotenv
 
@@ -27,7 +27,6 @@ def index():
 def getUsers():
     """get list of users"""
     users: list[User] = User.query.all()
-    print(users)
     return render_template('listUsers.html', users=users, title='User List')
 
 
@@ -137,7 +136,8 @@ def processDeleteUser(user_id: int):
 def displayNewPostForm(user_id: int):
     """Show form to add a post for that user."""
     user: User = User.query.get(user_id)
-    return render_template('newPost.html', title="New Post", user=user, post={})
+    tags: list[Tag] = Tag.query.all()
+    return render_template('newPost.html', title="New Post", user=user, tags=tags, post={})
 
 
 @app.post('/users/<int:user_id>/posts/new')
@@ -147,6 +147,7 @@ def processNewPostForm(user_id: int):
     # title, content
     form_title = request.form.get('title', '')
     form_content = request.form.get('content', '')
+    form_tags = request.form.getlist('tags')
 
     # data validation
     validation_errors = []
@@ -159,9 +160,16 @@ def processNewPostForm(user_id: int):
         return render_template('newPost.html', post={}, title='Add Post', errors=validation_errors)
 
     # create post with data
-    post = Post(title=form_title, content=form_content, author_id=user_id)
+    post: Post = Post(title=form_title, content=form_content,
+                      author_id=user_id)
 
     db.session.add(post)
+    db.session.commit()
+
+    post_tags: list[PostTag] = [
+        PostTag(tag_id=tag_id, post_id=post.id) for tag_id in form_tags]
+
+    db.session.add_all(post_tags)
     db.session.commit()
 
     # redirect
@@ -179,7 +187,8 @@ def getPostInfo(post_id: int):
 def displayEditPostForm(post_id: int):
     """Show form to edit a post, and to cancel (back to user page)."""
     post = Post.query.get(post_id)
-    return render_template('editPost.html', post=post, title="Edit Post")
+    tags = Tag.query.all()
+    return render_template('editPost.html', post=post, tags=tags, title="Edit Post")
 
 
 @app.post('/posts/<int:post_id>/edit')
@@ -191,6 +200,7 @@ def processEditPostForm(post_id: int):
     # title, content
     form_title = request.form.get('title', '')
     form_content = request.form.get('content', '')
+    form_tags = request.form.getlist('tags')
 
     # data validation
     validation_errors = []
@@ -202,11 +212,25 @@ def processEditPostForm(post_id: int):
     if validation_errors:
         return render_template('editPost.html', post=post, title='Edit Post', errors=validation_errors)
 
-    # create post with data
+    # update post with data
     post.title = form_title
     post.content = form_content
 
     db.session.add(post)
+    db.session.commit()
+
+    # remove old post tags
+    old_posttags: list[PostTag] = PostTag.query.filter_by(
+        post_id=post_id).all()
+
+    for post_tag in old_posttags:
+        db.session.delete(post_tag)
+
+    # persist new post tags
+    new_posttags: list[PostTag] = [
+        PostTag(tag_id=tag_id, post_id=post.id) for tag_id in form_tags]
+
+    db.session.add_all(new_posttags)
     db.session.commit()
 
     # redirect
@@ -225,3 +249,96 @@ def processDeletePost(post_id: int):
     db.session.commit()
 
     return redirect('/users/' + str(post.author_id))
+
+
+@app.get('/tags')
+def tagList():
+    """Lists all tags, with links to the tag detail page."""
+    tags: list[Tag] = Tag.query.all()
+    return render_template('listTags.html', tags=tags, title='Tag List')
+
+
+@app.get('/tags/<int:tag_id>')
+def getTag(tag_id: int):
+    """Show detail about a tag. Have links to edit form and to delete."""
+    tag: Tag = Tag.query.get_or_404(tag_id)
+    return render_template('tagDetails.html', tag=tag, title='Tag Info')
+
+
+@app.get('/tags/new')
+def displayNewTagForm():
+    """Shows a form to add a new tag."""
+    return render_template('newTag.html', tag={}, title='Add Tag')
+
+
+@app.post('/tags/new')
+def processNewTagForm():
+    """Process add form, adds tag, and redirect to tag list."""
+    # name
+    form_name = request.form.get('name', '')
+
+    # data validation
+    validation_errors = []
+    if not form_name:
+        validation_errors.append('Name is required.')
+
+    if validation_errors:
+        return render_template('newTag.html', tag={}, title='Add Tag', errors=validation_errors)
+
+    # create tag with data
+    tag = Tag(name=form_name)
+
+    db.session.add(tag)
+    db.session.commit()
+
+    # redirect
+    return redirect('/tags')
+
+
+@app.get('/tags/<int:tag_id>/edit')
+def displayEditTagForm(tag_id: int):
+    """Show edit form for a tag."""
+    tag = Tag.query.get(tag_id)
+    return render_template('editTag.html', tag=tag, title="Edit Tag")
+
+
+@app.post('/tags/<int:tag_id>/edit')
+def processEditTagForm(tag_id: int):
+    """Process edit form, edit tag, and redirects to the tags list."""
+
+    # get tag from DB
+    tag: Tag = Tag.query.get(tag_id)
+
+    # name
+    form_name = request.form.get('name', '')
+
+    # data validation
+    validation_errors = []
+    if not form_name:
+        validation_errors.append('Name is required.')
+
+    if validation_errors:
+        return render_template('editTag.html', tag=tag, title='Edit Tag', errors=validation_errors)
+
+    # create tag with data
+    tag.name = form_name
+
+    db.session.add(tag)
+    db.session.commit()
+
+    # redirect
+    return redirect('/tags')
+
+
+@app.post('/tags/<int:tag_id>/delete')
+def deleteTag(tag_id: int):
+    """Delete a tag."""
+
+    # get tag to delete
+    tag: Tag = Tag.query.get(tag_id)
+
+    # delete user
+    db.session.delete(tag)
+    db.session.commit()
+
+    return redirect('/tags')

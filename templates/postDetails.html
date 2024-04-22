@@ -9,6 +9,13 @@
 
                 <p><small>By {{post.author.full_name()}}</small></p>
 
+                <div class="d-flex w-50 mx-auto justify-space-between">
+                    {% for tag in post.tags %}
+                    <span class=" border-0 mx-auto mb-5"><a class="badge bg-info" href={{'/tags/' + tag.id |
+                            string}}>{{tag.name}}</a></span>
+                    {% endfor %}
+                </div>
+
                 <form class="mb-0" action={{'/posts/' + post.id | string + '/delete' }} method="post">
                     <input type="hidden" value={{post.author.id}} />
                     <a href={{'/users/' + post.author_id | string }} class="btn-link link-info mx-2">Cancel</a>

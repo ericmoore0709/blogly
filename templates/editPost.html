@@ -10,6 +10,19 @@
         <textarea class="form-control" name="content" rows="30" cols="50"
             placeholder="Content">{{post.content}}</textarea>
     </div>
+    <div class="d-flex flex-column mb-3 w-50 mx-auto">
+        <span class="text-end me-5"><strong>Tags</strong></span>
+        {% for tag in tags %}
+        <div class="d-flex">
+            <label class="mx-2 col text-end" for={{tag.name}}>{{tag.name}}</label>
+            {% if tag.name in post.tags | map(attribute='name') %}
+            <input class="mx-2 col-1" checked type="checkbox" name='tags' value={{tag.id}} id={{tag.name}} />
+            {% else %}
+            <input class="mx-2 col-1" type="checkbox" name='tags' value={{tag.id}} id={{tag.name}} />
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
     <a href={{ '/posts/' + post.id | string }} class='btn-link link-info'>Cancel</a>
     <button class='btn btn-success'>Edit</button>
 </form>

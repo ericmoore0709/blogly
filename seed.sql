@@ -1,4 +1,6 @@
 -- Drop the tables entirely.
+DROP TABLE IF EXISTS posttags;
+DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS users;
 -- Create the tables
@@ -17,6 +19,19 @@ CREATE TABLE posts (
     author_id INTEGER,
     PRIMARY KEY (id),
     FOREIGN KEY(author_id) REFERENCES users (id)
+);
+CREATE TABLE tags (
+    id SERIAL NOT NULL,
+    name VARCHAR NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (name)
+);
+CREATE TABLE posttags (
+    post_id INTEGER NOT NULL,
+    tag_id INTEGER NOT NULL,
+    PRIMARY KEY (post_id, tag_id),
+    FOREIGN KEY(post_id) REFERENCES posts (id),
+    FOREIGN KEY(tag_id) REFERENCES tags (id)
 );
 -- Add dummy data to users table
 INSERT INTO users (id, first_name, last_name, image_url)
@@ -300,6 +315,88 @@ Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque
         '10/5/2023',
         1
     );
+-- Add dummy data to tags table
+INSERT INTO tags (id, name)
+VALUES (1, 'Alpha');
+INSERT INTO tags (id, name)
+VALUES (2, 'Bravo');
+INSERT INTO tags (id, name)
+VALUES (3, 'Charlie');
+INSERT INTO tags (id, name)
+VALUES (4, 'Delta');
+INSERT INTO tags (id, name)
+VALUES (5, 'Echo');
+INSERT INTO tags (id, name)
+VALUES (6, 'Foxtrot');
+INSERT INTO tags (id, name)
+VALUES (7, 'Golf');
+INSERT INTO tags (id, name)
+VALUES (8, 'Hotel');
+INSERT INTO tags (id, name)
+VALUES (9, 'India');
+INSERT INTO tags (id, name)
+VALUES (10, 'Juliett');
+-- Add dummy data to posttags table
+INSERT INTO posttags (post_id, tag_id)
+VALUES (17, 6);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (6, 5);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (16, 7);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (6, 9);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (11, 6);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (1, 2);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (5, 10);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (17, 10);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (2, 9);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (2, 5);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (8, 1);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (6, 4);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (19, 1);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (7, 2);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (4, 6);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (17, 8);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (9, 9);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (19, 8);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (11, 5);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (15, 6);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (7, 5);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (7, 1);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (19, 4);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (2, 1);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (16, 10);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (20, 6);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (18, 4);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (8, 8);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (8, 6);
+INSERT INTO posttags (post_id, tag_id)
+VALUES (13, 9);
 -- update users table id primary key start
 SELECT setval(
         'users_id_seq',
@@ -314,5 +411,13 @@ SELECT setval(
         (
             SELECT MAX(id)
             FROM posts
+        ) + 1
+    );
+-- update tags table id primary key start
+SELECT setval(
+        'tags_id_seq',
+        (
+            SELECT MAX(id)
+            FROM tags
         ) + 1
     );
